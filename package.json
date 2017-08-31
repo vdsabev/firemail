@@ -1,0 +1,17 @@
+{
+  "name": "firemail",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "firebase serve --only functions",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-admin": "5.2.1",
+    "firebase-functions": "0.6.3",
+    "nodemailer": "4.1.0"
+  },
+  "devDependencies": {
+    "firebase-tools": "3.9.2"
+  }
+}
