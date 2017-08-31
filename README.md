@@ -16,8 +16,8 @@ Use Firebase Cloud Functions to host a web service that sends email.
     firebase functions:config:set email.recipient="recipient@example.com" email.sender="sender@example.com" email.password="password"
     ```
 4. If you use a Gmail account, you may need to additionally setup your account:
-  - https://www.google.com/settings/security/lesssecureapps
-  - https://accounts.google.com/DisplayUnlockCaptcha
+      - https://www.google.com/settings/security/lesssecureapps
+      - https://accounts.google.com/DisplayUnlockCaptcha
 
 # License
 Copyright (c) 2017 Vladimir Sabev
