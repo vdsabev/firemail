@@ -13,7 +13,7 @@ if (!password) throw new Error(`Invalid password: ${password}`);
 firebase.initializeApp(config.firebase);
 
 const smtpServerUrlTemplate = config.email.smtpServerUrlTemplate || 'smtps://${email}:${password}@smtp.gmail.com';
-const smtpServerUrl = smtpServerUrlTemplate.replace('${email}', sender).replace('${password}', password);
+const smtpServerUrl = smtpServerUrlTemplate.replace('${email}', encodeURIComponent(sender)).replace('${password}', encodeURIComponent(password));
 if (!smtpServerUrl) throw new Error(`Invalid smtpServerUrl: ${smtpServerUrl}`);
 
 const mailer = nodemailer.createTransport(smtpServerUrl);
