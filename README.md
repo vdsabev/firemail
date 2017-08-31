@@ -2,8 +2,9 @@
 Use Firebase Cloud Functions to host a web service that sends email.
 
 # Setup
-1. Install dependencies using `npm install`
-2. Create a `.firebaserc` file with the following structure:
+1. If you haven't, create a firebase project: https://console.firebase.google.com
+2. Install dependencies using `npm install`
+3. Create a `.firebaserc` file with the following structure:
     ```json
     {
       "projects": {
@@ -11,13 +12,21 @@ Use Firebase Cloud Functions to host a web service that sends email.
       }
     }
     ```
-3. Run the following command using your credentials:
+4. Run the following command using your credentials:
     ```
     firebase functions:config:set email.recipient="recipient@example.com" email.sender="sender@example.com" email.password="password"
     ```
-4. If you use a Gmail account, you may need to additionally setup your account:
+5. If you use a Gmail account, you may need to additionally setup your account:
       - https://www.google.com/settings/security/lesssecureapps
       - https://accounts.google.com/DisplayUnlockCaptcha
+6. Deploy using `npm run deploy`
+
+# Running locally
+After setting up the remote configuration, you can pull it locally using:
+```
+firebase functions:config:get > .runtimeconfig.json
+```
+Then run `npm start` to start a local firebase functions server.
 
 # License
 Copyright (c) 2017 Vladimir Sabev
