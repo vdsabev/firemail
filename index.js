@@ -2,16 +2,21 @@ const firebase = require('firebase-admin');
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 
-firebase.initializeApp(functions.config().firebase);
+const config = functions.config();
+if (!config.email) throw new Error(`Invalid email config: ${config.email}`);
 
-const config = functions.config().email;
-if (!config) throw new Error(`Invalid config: ${config}`);
+const { recipient, sender, password } = config.email;
+if (!recipient) throw new Error(`Invalid recipient: ${recipient}`);
+if (!sender) throw new Error(`Invalid sender: ${sender}`);
+if (!password) throw new Error(`Invalid password: ${password}`);
 
-// TODO: Validate config
-const { recipient, sender, password } = config;
+firebase.initializeApp(config.firebase);
 
-// TODO: Make SMTP server configurable
-const mailer = nodemailer.createTransport(`smtps://${encodeURIComponent(sender)}:${encodeURIComponent(password)}@smtp.gmail.com`);
+const smtpServerUrlTemplate = config.email.smtpServerUrlTemplate || 'smtps://${email}:${password}@smtp.gmail.com';
+const smtpServerUrl = smtpServerUrlTemplate.replace('${email}', sender).replace('${password}', password);
+if (!smtpServerUrl) throw new Error(`Invalid smtpServerUrl: ${smtpServerUrl}`);
+
+const mailer = nodemailer.createTransport(smtpServerUrl);
 
 exports.sendEmail = functions.https.onRequest((req, res) => {
   // TODO: Add an option to restrict function to only accept requests from the same domain

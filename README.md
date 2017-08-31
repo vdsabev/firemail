@@ -19,7 +19,11 @@ Use Firebase Cloud Functions to host a web service that sends email.
 5. If you use a Gmail account, you may need to additionally setup your account:
       - https://www.google.com/settings/security/lesssecureapps
       - https://accounts.google.com/DisplayUnlockCaptcha
-6. Deploy using `npm run deploy`
+6. If you want to use something other than Gmail, you can change the SMTP Server URL Template, which is `smtps://${email}:${password}@smtp.gmail.com` by default:
+    ```
+    firebase functions:config:set email.smtpServerUrlTemplate="smtps://${email}:${password}@smtp.<SOME-OTHER-SMTP-PROVIDER>.com"
+    ```
+7. After you've configured everything, deploy your web service using `npm run deploy`
 
 # Running locally
 After setting up the remote configuration, you can pull it locally using:
