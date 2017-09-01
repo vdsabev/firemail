@@ -1,7 +1,7 @@
 # Firemail
 Use Firebase Cloud Functions to host a web service that sends email.
 
-# Setup
+# Required configuration
 1. If you haven't, create a firebase project: https://console.firebase.google.com
 2. Install dependencies using `npm install`
 3. Create a `.firebaserc` file with the following structure:
@@ -12,23 +12,44 @@ Use Firebase Cloud Functions to host a web service that sends email.
       }
     }
     ```
-4. Run the following command using your credentials:
+4. Run the following command using your credentials (for more options, see the additional configuration below):
     ```
-    firebase functions:config:set email.recipient="recipient@example.com" email.sender="sender@example.com" email.password="password"
+    firebase functions:config:set email.sender="sender@example.com" email.password="password"
     ```
-5. If you use a Gmail account, you may need to additionally setup your account:
+5. If you use a Gmail account, you may need to setup your account to allow using it as an SMTP server:
       - https://www.google.com/settings/security/lesssecureapps
       - https://accounts.google.com/DisplayUnlockCaptcha
-6. If you want to use something other than Gmail, you can change the SMTP Server URL Template, which is `smtps://${email}:${password}@smtp.gmail.com` by default:
-    ```
-    firebase functions:config:set email.smtpServerUrlTemplate="smtps://${email}:${password}@smtp.<SOME-OTHER-SMTP-PROVIDER>.com"
-    ```
-7. After you've configured everything, deploy your web service using `npm run deploy`
+6. After you've configured everything, deploy your web service using `npm run deploy`
+
+# Additional configuration
+You can set these options using `firebase functions:config:set ...` again
+
+## recipient
+By default, the service sends emails to the sender's own account. This is particularly useful for adding a simple contact form to your website. If you want to send emails to a different email address, use this option:
+```
+email.recipient="recipient@example.com"
+```
+
+For security reasons, this is a configuration option only. The service doesn't allow the recipient to be sent in the HTTP request body - otherwise, a malicious user could use it to send emails from the unsuspecting sender's account to random addresses.
+
+## alias
+By default, the service uses the sender's email address as the `from` field. If you want to customize it, use this option:
+```
+email.alias="MyWebsite <noreply@mywebsite.com>"
+```
+
+If using Gmail, you have to setup the account as an alias: https://support.google.com/mail/answer/22370
+
+## smtpServerUrlTemplate
+If you want to use an email provider other than Gmail, you can change the SMTP Server URL Template, which is `smtps://${email}:${password}@smtp.gmail.com` by default:
+```
+email.smtpServerUrlTemplate="smtps://${email}:${password}@smtp.<SOME-OTHER-SMTP-PROVIDER>.com"
+```
 
 # Running locally
 After setting up the remote configuration, you can pull it locally using:
 ```
-firebase functions:config:get > .runtimeconfig.json
+firebase functions:config:get > ./functions/.runtimeconfig.json
 ```
 Then run `npm start` to start a local firebase functions server.
 
