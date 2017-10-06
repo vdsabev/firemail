@@ -15,7 +15,7 @@ You can either fork this repository and configure it, or use the package in your
     ```
     Make sure you set your project's name in the configuration.
 3. Install the `firebase` command using `npm install firebase-tools --global`
-4. Run the following command with your credentials:
+4. Run the following command with your own credentials:
     ```
     firebase functions:config:set email.sender="sender@example.com" email.password="password"
     ```
@@ -40,6 +40,12 @@ Otherwise, if you have an existing project that you want to integrate Firemail w
 
 # Additional configuration
 You can set these options using `firebase functions:config:set ...` again
+
+## origin
+By default, the service can accept [cross-domain requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Access-Control-Allow-Origin). To secure your service, it's recommended that you use an origin different than `*` in production applications.
+```
+email.origin="*"
+```
 
 ## recipient
 By default, the service sends emails to the sender's own account. This is particularly useful for adding a simple contact form to your website. If you want to send emails to a different email address, use this option:
