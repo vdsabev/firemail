@@ -2,8 +2,8 @@
   "private": true,
   "name": "firemail-functions",
   "dependencies": {
-    "firebase-admin": "5.2.1",
-    "firebase-functions": "0.6.3",
-    "nodemailer": "4.1.0"
+    "firebase-admin": "5.4.1",
+    "firebase-functions": "0.7.0",
+    "nodemailer": "4.1.3"
   }
 }

@@ -2,9 +2,10 @@
 Use Firebase Cloud Functions to host a web service that sends email.
 
 # Required configuration
+You can either fork this repository and configure it, or use the package in your own project. In both cases, you'll need to do the following:
+
 1. If you haven't, create a firebase project: https://console.firebase.google.com
-2. Install dependencies using `npm install`
-3. Create a `.firebaserc` file with the following structure:
+2. In your root folder, create a `.firebaserc` file with the following structure:
     ```json
     {
       "projects": {
@@ -12,14 +13,30 @@ Use Firebase Cloud Functions to host a web service that sends email.
       }
     }
     ```
-4. Run the following command using your credentials (for more options, see the additional configuration below):
+    Make sure you set your project's name in the configuration.
+3. Install the `firebase` command using `npm install firebase-tools --global`
+4. Run the following command with your credentials:
     ```
     firebase functions:config:set email.sender="sender@example.com" email.password="password"
     ```
-5. If you use a Gmail account, you may need to setup your account to allow using it as an SMTP server:
+    For more options, see [Additional configuration](#additional-configuration).
+5. If you're using Gmail to deliver messages, you may need to setup your account to allow using it as an SMTP server:
       - https://www.google.com/settings/security/lesssecureapps
       - https://accounts.google.com/DisplayUnlockCaptcha
-6. After you've configured everything, deploy your web service using `npm run deploy`
+
+If you forked this repository, run `npm install`, then `firebase deploy --only functions` to deploy your web service, and you should be done!
+
+Otherwise, if you have an existing project that you want to integrate Firemail with, there are some additional steps:
+1. Run `npm install firemail`
+2. Create a `firebase.json` file with the following structure:
+    ```json
+    {
+      "functions": {
+          "source": "node_modules/firemail/functions"
+        }
+    }
+    ```
+3. Finally, deploy your web service by running `firebase deploy --only functions`
 
 # Additional configuration
 You can set these options using `firebase functions:config:set ...` again
